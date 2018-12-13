@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  admin_bot:
+    container_name: admin
+    build: .
+    env_file:
+      - .env.admin
+    restart: unless-stopped
+    networks:
+      - bots
+
+  user_bot:
+    container_name: user
+    build: .
+    env_file:
+      - .env.user
+    restart: unless-stopped
+    networks:
+      - bots
+
+networks:
+    bots:
+        driver: bridge

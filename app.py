@@ -1,5 +1,6 @@
-import models
-
+import tg.admin.handlers
+import tg.user.handlers
+from tg.bot import bot
 
 if __name__ == '__main__':
-    print('MAIN FUNCTION')
+    bot.polling()
