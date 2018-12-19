@@ -16,7 +16,6 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(BigInteger, Sequence('user_id_seq'), primary_key=True)
     username = Column(String(50))
-    admin = Column(Boolean, nullable=False, default=False)
 
     def __repr__(self):
         return "<User(name='%s', fullname='%s', password='%s')>" % (
