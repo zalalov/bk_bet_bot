@@ -37,9 +37,9 @@ def get_config():
     :return:
     """
     if os.environ.get('DEBUG') is not None:
-        return Dev
+        return Dev()
 
     if os.environ.get('BOT_ENV') == 'ADMIN':
-        return Admin
+        return Admin()
 
-    return User
+    return User()
