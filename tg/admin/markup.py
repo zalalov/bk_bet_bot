@@ -2,7 +2,7 @@ from telebot import types
 
 
 BUTTON_USERS = '👬 Пользователи'
-BUTTON_ADD_BET = '✍️ Добавить ставку'
+BUTTON_ADD_BET = '✍️ Добавить ставки'
 BUTTON_CLEAR_ALL = '🚽 Очистить все'
 
 def markup_main():
