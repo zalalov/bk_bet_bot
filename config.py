@@ -6,7 +6,7 @@ class Config:
     DB_CONNECTION_STRING = 'sqlite:///bet.db'
     TG_BOT_TOKEN = os.environ['BOT_TOKEN']
     ADMINS = [
-        '<ADMIN_USERNAME>'
+        '<ADMIN_NAME>'
     ]
 
     def is_admin_mode(self):
