@@ -4,7 +4,8 @@ from tg.admin.markup import (
     markup_main,
     markup_bets,
     markup_users,
-    markup_back
+    markup_back,
+    markup_save_or_cancel
 )
 from tg.admin.markup import (
     BUTTON_USERS,
@@ -14,7 +15,10 @@ from tg.admin.markup import (
     BUTTON_BET_LIST,
     BUTTON_BET_ADD,
     BUTTON_BACK,
+    BUTTON_BET_SAVE,
+    BUTTON_CANCEL
 )
+from tg.admin.utils import parse_bets
 from tg.bot import bot
 
 conf = config.get_config()
@@ -37,26 +41,50 @@ def users(message):
 @bot.message_handler(func=lambda m: m.text == BUTTON_USER_LIST)
 @is_admin_mode
 @is_user_admin
-def users(message):
+def user_list(message):
     bot.send_message(message.chat.id, 'USER LIST HANDLER', reply_markup=markup_back())
 
 
 @bot.message_handler(func=lambda m: m.text == BUTTON_BETS)
 @is_admin_mode
 @is_user_admin
-def users(message):
+def bets(message):
     bot.send_message(message.chat.id, 'BETS HANDLER', reply_markup=markup_bets())
 
 
 @bot.message_handler(func=lambda m: m.text == BUTTON_BET_LIST)
 @is_admin_mode
 @is_user_admin
-def users(message):
+def bet_list(message):
     bot.send_message(message.chat.id, 'BET LIST HANDLER', reply_markup=markup_back())
 
 
 @bot.message_handler(func=lambda m: m.text == BUTTON_BACK)
 @is_admin_mode
 @is_user_admin
-def users(message):
+def back(message):
     main_menu(message)
+
+
+@bot.message_handler(func=lambda m: m.text == BUTTON_BET_ADD)
+@is_admin_mode
+@is_user_admin
+def bet_add(message):
+    bot.send_message(
+        message.chat.id,
+        'Введите ставки разделяя их двумя переводами строки:',
+        # reply_markup=markup_save_or_cancel()
+    )
+    bot.register_next_step_handler(message, bet_add_handler)
+
+
+def bet_add_handler(message):
+    bets = parse_bets(message.text)
+    response = '\n'.join(['{content}\n-------------'.format(content=bet['content']) for bet in bets])
+
+    bot.send_message(
+        chat_id=message.chat.id,
+        text=response,
+        reply_markup=markup_main(),
+        parse_mode='markdown'
+    )

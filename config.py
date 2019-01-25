@@ -1,4 +1,6 @@
 import os
+import utils
+
 
 
 class Config:
@@ -6,8 +8,9 @@ class Config:
     DB_CONNECTION_STRING = 'sqlite:///bet.db'
     TG_BOT_TOKEN = os.environ['BOT_TOKEN']
     ADMINS = [
-        '<ADMIN_NAME>'
+        # '<ADMIN_NAME>'
     ]
+    STORE_FILEPATH = os.path.join(utils.script_path(), 'store.pickle')
 
     def is_admin_mode(self):
         return self.MODE == Admin.MODE

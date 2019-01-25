@@ -3,12 +3,17 @@ from telebot import types
 
 BUTTON_USERS = '👬 Пользователи'
 BUTTON_BETS = '✍️ Cтавки'
-BUTTON_CLEAR_ALL = '🚽 Очистить все'
-BUTTON_USER_LIST = '📜 Список'
-BUTTON_USER_ADD = '➕ Добавить'
-BUTTON_BET_LIST = '📜 Список'
-BUTTON_BET_ADD = '➕ Добавить'
+
+BUTTON_USER_LIST = '📜 Список пользователей'
+BUTTON_USER_ADD = '➕ Добавить пользователей'
+
+BUTTON_BET_LIST = '📜 Список ставок'
+BUTTON_BET_ADD = '➕ Добавить ставки'
+BUTTON_BET_SAVE = '💾 Сохранить ставки'
+
 BUTTON_BACK = '🔙 Назад'
+BUTTON_CLEAR_ALL = '🚽 Очистить все'
+BUTTON_CANCEL = '❌ Отмена'
 
 def markup_main():
     markup = types.ReplyKeyboardMarkup(row_width=2)
@@ -46,10 +51,11 @@ def markup_bets():
 
     return markup
 
-def markup_back():
-    markup = types.ReplyKeyboardMarkup(row_width=1)
+def markup_save_or_cancel():
+    markup = types.ReplyKeyboardMarkup(row_width=2)
     markup.add(
-        BUTTON_BACK
+        BUTTON_BET_SAVE,
+        BUTTON_CANCEL
     )
 
     return markup
