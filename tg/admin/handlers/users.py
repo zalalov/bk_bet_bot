@@ -12,6 +12,7 @@ from tg.admin.markup import (
 )
 from tg.admin.utils import parse_users
 from tg.bot import bot
+from store import Store
 
 conf = config.get_config()
 
@@ -45,6 +46,10 @@ def bet_add(message):
 
 def user_add_handler(message):
     users = parse_users(message.text)
+    store = Store()
+
+    for user in users:
+        store.add_user(user)
 
     response = '\n'.join(['{i}. {content}\n'.format(i=i, content=user) for i, user in enumerate(users)])
 
