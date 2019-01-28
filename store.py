@@ -1,6 +1,5 @@
 import pickle
 import os
-from collections import defaultdict
 from config import get_config
 from tg.decorators import singleton
 
@@ -8,32 +7,35 @@ from tg.decorators import singleton
 @singleton
 class Store:
     def __init__(self):
-        self.data = {
+        self.config = get_config()
+
+        if not os.path.exists(self.config.STORE_FILEPATH):
+            self.data = self.get_initial_value()
+        else:
+            self.load()
+
+    def get_initial_value(self):
+        return {
             'users': {},
             'bets': []
         }
 
-        self.config = get_config()
-
-        if not os.path.exists(self.config.STORE_FILEPATH):
-            self.data = {
-                'users': {}
-            }
-        else:
-            self.load()
-
-    def dumps(self, ):
-        return pickle.dump(self.data, self.config.STORE_FILEPATH)
+    def dump(self):
+        with open(self.config.STORE_FILEPATH, 'wb') as f:
+            pickle.dump(self.data, f)
 
     def load(self):
-        self.data = pickle.load(self.config.STORE_FILEPATH)
+        with open(self.config.STORE_FILEPATH, 'rb') as f:
+            self.data = pickle.load(f)
 
     def add_user(self, user):
         self.data['users'][user] = {
             'bets': []
         }
 
-        self.dumps()
+        self.dump()
 
     def add_bet(self, bet):
         self.data['bets'].append(bet)
+
+        self.dump()
