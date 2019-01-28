@@ -9,7 +9,8 @@ from tg.decorators import singleton
 class Store:
     def __init__(self):
         self.data = {
-            'users': {}
+            'users': {},
+            'bets': []
         }
 
         self.config = get_config()
@@ -33,3 +34,6 @@ class Store:
         }
 
         self.dumps()
+
+    def add_bet(self, bet):
+        self.data['bets'].append(bet)

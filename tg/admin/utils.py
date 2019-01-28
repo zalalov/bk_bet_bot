@@ -1,9 +1,12 @@
 import re
+import config
 
-def parse_bets(bets):
-    _bets = bets.strip()
+conf = config.get_config()
 
-    if not len(bets):
+def parse_bets(text):
+    _bets = text.strip()
+
+    if not len(text):
         return []
 
     delimiters = [
@@ -43,7 +46,7 @@ def parse_bet(bet):
     if not len(_bet):
         return None
 
-    match = re.search(r'\u041a\u0424 (\d+[.]\d+|\d+)', bet)
+    match = re.search(conf.REGEX_BET_COEF, bet)
 
     if match:
         return {
@@ -52,3 +55,26 @@ def parse_bet(bet):
         }
 
     return None
+
+def parse_users(text):
+    users = text.strip()
+
+    if not len(text):
+        return []
+
+    users = users.split('\n')
+
+    map(lambda x: x.strip(), users)
+
+    if not len(users):
+        return []
+
+    parsed = []
+
+    for user in users:
+        u = re.search(conf.REGEX_USERNAME, user)
+
+        if u:
+            parsed.append(u.group(0))
+
+    return parsed

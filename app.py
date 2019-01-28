@@ -1,4 +1,8 @@
-import tg.admin.handlers
+from tg.admin.handlers import (
+    common,
+    bets,
+    users
+)
 import tg.user.handlers
 from tg.bot import bot
 
