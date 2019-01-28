@@ -12,6 +12,7 @@ from tg.admin.markup import (
 )
 from tg.admin.utils import parse_bets
 from tg.bot import bot
+from store import Store
 
 conf = config.get_config()
 
@@ -44,7 +45,15 @@ def bet_add(message):
 
 def bet_add_handler(message):
     bets = parse_bets(message.text)
+    store = Store()
+
+    for bet in bets:
+        store.add_bet(bet)
+
     response = '\n'.join(['{content}\n-------------'.format(content=bet['content']) for bet in bets])
+
+    if not response.strip():
+        response = 'Не удалось сохранить ставки'
 
     bot.send_message(
         chat_id=message.chat.id,
