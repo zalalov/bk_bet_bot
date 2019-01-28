@@ -12,6 +12,9 @@ class Config:
     ]
     STORE_FILEPATH = os.path.join(utils.script_path(), 'store.pickle')
 
+    REGEX_BET_COEF = r'\u041a\u0424 (\d+[.]\d+|\d+)'
+    REGEX_USERNAME = r'@[a-z0-9\_]{5,32}'
+
     def is_admin_mode(self):
         return self.MODE == Admin.MODE
 
