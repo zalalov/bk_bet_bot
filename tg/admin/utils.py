@@ -34,7 +34,10 @@ def parse_bets(text):
     parsed = []
 
     for bet in _bets:
-        parsed.append(parse_bet(bet))
+        b = parse_bet(bet)
+
+        if b:
+            parsed.append(b)
 
     return parsed
 

@@ -28,8 +28,8 @@ class Store:
         with open(self.config.STORE_FILEPATH, 'rb') as f:
             self.data = pickle.load(f)
 
-    def add_user(self, user):
-        self.data['users'][user] = {
+    def add_user(self, username):
+        self.data['users'][username] = {
             'bets': []
         }
 
@@ -39,3 +39,17 @@ class Store:
         self.data['bets'].append(bet)
 
         self.dump()
+
+    def add_bet_to_user(self, username, bet):
+        if username not in self.data['users']:
+            return
+
+        self.data['users'][username]['bets'].append(bet)
+
+        self.dump()
+
+    def get_users(self):
+        return self.data['users']
+
+    def get_bets(self):
+        return self.data['bets']
